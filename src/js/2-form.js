@@ -1,8 +1,32 @@
 const feedbackForm = document.querySelector('.feedback-form');
-const submitButton = document.querySelector('.submit');
-function handleClick(event) {
+const feedbackStateKey = 'feedback-form-state';
+const feedbackState = localStorage.getItem(feedbackStateKey);
+if (feedbackState) {
+  const stateObj = JSON.parse(feedbackState);
+  if (stateObj.email) {
+    feedbackForm.elements.email.value = stateObj.email;
+  }
+  if (stateObj.message) {
+    feedbackForm.elements.message.value = stateObj.message;
+  }
+}
+
+function handleInput(event) {
+  const email = feedbackForm.elements.email.value;
+  const message = feedbackForm.elements.message.value;
+  const feedbackData = { email, message };
+  const feedbackDataJson = JSON.stringify(feedbackData);
+  localStorage.setItem(feedbackStateKey, feedbackDataJson);
+}
+function handleSubmit(event) {
   event.preventDefault();
-  const form = event.target;
-  const email = form.elements.email.value;
-  const message = form.elements.message.value;
-};
+  const email = feedbackForm.elements.email.value;
+  const message = feedbackForm.elements.message.value;
+  const feedbackData = { email, message };
+  console.log(feedbackData);
+  localStorage.removeItem(feedbackStateKey);
+  feedbackForm.reset();
+}
+
+feedbackForm.addEventListener('submit', handleSubmit);
+feedbackForm.addEventListener('input', handleInput);
