@@ -20,13 +20,16 @@ function handleInput(event) {
 }
 function handleSubmit(event) {
   event.preventDefault();
-  const email = feedbackForm.elements.email.value;
-  const message = feedbackForm.elements.message.value;
+  const email = feedbackForm.elements.email.value.trim();
+  const message = feedbackForm.elements.message.trim();
+  if (!email || !message) {
+    alert('Fields can`t be empty');
+    return;
+  }
   const feedbackData = { email, message };
   console.log(feedbackData);
   localStorage.removeItem(feedbackStateKey);
   feedbackForm.reset();
 }
-
 feedbackForm.addEventListener('submit', handleSubmit);
 feedbackForm.addEventListener('input', handleInput);
