@@ -21,7 +21,7 @@ function handleInput(event) {
 function handleSubmit(event) {
   event.preventDefault();
   const email = feedbackForm.elements.email.value.trim();
-  const message = feedbackForm.elements.message.trim();
+  const message = feedbackForm.elements.message.value.trim();
   if (!email || !message) {
     alert('Fields can`t be empty');
     return;
